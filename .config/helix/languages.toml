@@ -1,0 +1,60 @@
+[[language]]
+name = "svelte"
+auto-format = true
+# formatter = { command = "npx", args = ["prettier", "--plugin-search-dir", "."] }
+
+[[language]]
+name = "typescript"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "typescript"] }
+
+[[language]]
+name = "javascript"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "babel"] }
+
+[[language]]
+name = "tsx"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "typescript"] }
+
+[[language]]
+name = "jsx"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "babel"] }
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "json"] }
+
+[[language]]
+name = "css"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "css"] }
+
+[[language]]
+name = "scss"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "scss"] }
+
+[[language]]
+name = "html"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "html"] }
+
+[[language]]
+name = "graphql"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "graphql"] }
+
+[[language]]
+name = "markdown"
+auto-format = true
+formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "markdown"] }
+
+# [[language]]
+# name = "git-commit"
+# scope = "git.commitmsg"
+# file-types = ["COMMIT_EDITMSG"]
+# rulers = [50, 72]

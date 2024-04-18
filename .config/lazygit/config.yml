@@ -1,0 +1,25 @@
+git:
+  # overrideGpg: true
+  paging:
+    # pager: delta --dark --paging=never --line-numbers
+    pager: diff-so-fancy
+os:
+  edit: 'hx {{filename}}'
+  editAtLine: 'hx {{filename}}:{{line}}'
+gui:
+  # border: hidden
+  showBottomLine: false
+  expandFocusedSidePanel: true
+  theme:
+    activeBorderColor:
+      - '#DDDFE4'
+      - bold
+    inactiveBorderColor:
+      - '#2E2F3C'
+      - bold
+    selectedLineBgColor:
+      - '#13131A'
+    # selectedRangeBgColor:
+    #   - reverse
+    unstagedChangesColor:
+      - white
