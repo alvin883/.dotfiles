@@ -290,12 +290,21 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# Auto-run ssh-agent on ssh login
+MY_SESSION_TYPE='normal'
+
+# Checking session type
 if [[ -n $SSH_CONNECTION ]]; then
+  MY_SESSION_TYPE='definitelyssh'
+elif [[ $(ps -o comm= -p "$PPID") = 'wezterm-mux-ser' ]]; then
+  MY_SESSION_TYPE='definitelyssh'
+fi
+
+# Auto-run ssh-agent on ssh login
+if [[ $MY_SESSION_TYPE = 'definitelyssh' ]]; then
   echo "\n\nStarting ssh-agent and adding github key...";
   eval $(ssh-agent);
   ssh-add ~/.ssh/github_MyPcDailyDriver;
-  echo "Agent started & added!\n"
+  echo "Agent started & added!\n";
 
   # Auto-kill ssh-agent on logout or exit
   trap 'test -n "$SSH_AGENT_PID" && eval `/usr/bin/ssh-agent -k`' 0
