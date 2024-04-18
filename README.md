@@ -1,4 +1,5 @@
-This is just another personal `.dotfiles` so I don't lose my config by mistake (ikr, it happens when you tinker a lot ¯\_(ツ)\_/¯)
+This is just another personal `.dotfiles` so I don't lose my config by mistake. ikr, it happens when you tinker a lot
+¯\\_(ツ)\_/¯
 
 This is using a git bare repository, no symlinks, here's article you must read before proceeding:
 
