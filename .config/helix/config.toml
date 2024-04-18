@@ -1,0 +1,73 @@
+theme = 'mytheme'
+# theme = 'catppuccin_mocha'
+# theme = 'base16_transparent'
+# [theme]
+# inherits = 'catppuccin_mocha'
+# "ui.background.bg" = '#1e1e2e00'
+# base = "#1e1e2e00"
+
+[editor]
+cursorline = true
+line-number = 'relative'
+bufferline = 'always'
+color-modes = true
+shell = ["zsh", "-c"]
+auto-info = false
+
+# [editor.cursor-shape]
+# insert = "bar"
+
+[editor.file-picker]
+hidden = false
+
+[editor.statusline]
+# right = ['version-control', "spacer", "spacer", "spacer", "diagnostics", "selections", "position", "file-encoding"]
+
+# TODO: find a way to only enable this on markdown
+# related: https://github.com/helix-editor/helix/discussions/5830
+# soft-wrap.enable = true
+
+[editor.lsp]
+# display-messages = false
+# inline-diagnostics.cursor-line = []
+# inline-diagnostics.other-lines = []
+
+[editor.indent-guides]
+render = true
+character = "┊"
+
+[keys.normal]
+esc = ['collapse_selection', 'keep_primary_selection']
+C-f = ':format'
+# C-s = ':write'
+"C-A-s" = 'save_selection'
+"ret" = 'open_below'
+"A-ret" = ['open_below', 'normal_mode']
+"C-ret" = 'open_above'
+"C-S-ret" = ['open_above', 'normal_mode']
+"C-left" = 'move_prev_word_start'
+"C-right" = 'move_next_word_start'
+
+[keys.insert]
+C-f = [':format', 'normal_mode']
+C-s = [':write', 'normal_mode']
+"C-S-s" = 'commit_undo_checkpoint'
+"C-left" = 'move_prev_word_start'
+"C-right" = 'move_next_word_start'
+"A-ret" = ['normal_mode', 'open_below']
+
+[keys.select]
+"C-left" = 'extend_prev_word_start'
+"C-right" = 'extend_next_word_start'
+
+[keys.normal.space]
+o = "file_picker_in_current_buffer_directory"
+i = ":toggle lsp.display-inlay-hints"
+t = ':toggle soft-wrap.enable'
+T = ':set soft-wrap.wrap-at-text-width true'
+c = ":buffer-close"
+
+# [editor.whitespace.render]
+# space = "all"
+# [editor.whitespace.characters]
+# space = "·"
