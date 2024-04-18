@@ -1,0 +1,27 @@
+{
+    "printWidth": 80,
+    "trailingComma": "all",
+    "overrides": [
+        {
+            "files": "**.{js,jsx,ts,tsx}",
+            "options": {
+                "trailingComma": "all",
+                "tabWidth": 2,
+                "useTabs": false,
+                "printWidth": 80
+            }
+        },
+        {
+            "files": [
+                ".vscode/**",
+                ".babelrc",
+                ".prettierrc",
+                "jsconfig.json",
+                "**.{css,scss}"
+            ],
+            "options": {
+                "tabWidth": 4
+            }
+        }
+    ]
+}

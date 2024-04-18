@@ -1,0 +1,45 @@
+[user]
+	name = Alvin Novian
+	email = alvinnovian883@gmail.com
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = hx
+	# pager = bat --style="numbers" --wrap=never
+	# pager = delta
+	pager = diff-so-fancy | bat --style="numbers" --wrap=never
+	abbrev = 8 # Abbreviate hash ID to 8 digits
+
+# [log]
+# 	date = relative
+# [format]
+# 	pretty = format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(9,trunc)%aN%C(auto,reset)%s%C(auto,red)%d%C(reset)
+	# with branches
+	# pretty = format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(9,trunc)%aN%C(auto,reset)%s%C(auto,red)% gD% D
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = decorations
+	line-numbers = true
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
