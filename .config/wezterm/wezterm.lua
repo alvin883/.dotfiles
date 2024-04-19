@@ -41,6 +41,40 @@ config.window_background_opacity = 0.97
 config.font_size = 11.8
 config.line_height = 1.34
 -------------------------------------------------------------------------------
+-- Events ---------------------------------------------------------------------
+wezterm.on('trigger-open-scrollback-into-editor', function(window, pane)
+  -- Retrieve the text from the pane
+  local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
+
+  -- Create a temporary file to pass to vim
+  local name = os.tmpname()
+  local f = io.open(name, 'w+')
+  f:write(text)
+  f:flush()
+  f:close()
+
+  -- Open a new window running vim and tell it to open the file
+  window:perform_action(
+    wezterm.action.SpawnCommandInNewWindow {
+      args = { 'hx', name },
+      set_environment_variables = {
+        PATH = wezterm.home_dir .. '/.cargo/bin:' .. os.getenv('PATH'),
+        HELIX_RUNTIME = wezterm.home_dir .. '/Documents/helix/runtime'
+      }
+    },
+    pane
+  )
+
+  -- Wait "enough" time for vim to read the file before we remove it.
+  -- The window creation and process spawn are asynchronous wrt. running
+  -- this script and are not awaitable, so we just pick a number.
+  --
+  -- Note: We don't strictly need to remove this file, but it is nice
+  -- to avoid cluttering up the temporary directory.
+  wezterm.sleep_ms(1000)
+  os.remove(name)
+end)
+-------------------------------------------------------------------------------
 -- Keybinding -----------------------------------------------------------------
 config.keys = {
   {
@@ -202,6 +236,11 @@ config.keys = {
     mods = 'ALT|CTRL|SHIFT',
     action = wezterm.action.ToggleFullScreen,
   },
+  {
+    key = 'H',
+    mods = 'ALT|CTRL|SHIFT',
+    action = wezterm.action.EmitEvent 'trigger-open-scrollback-into-editor',
+  }
 }
 -------------------------------------------------------------------------------
 -- Multiplexing ---------------------------------------------------------------
