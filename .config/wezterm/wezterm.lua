@@ -206,6 +206,28 @@ config.keys = {
     },
   },
   {
+    key = 'W',
+    mods = 'ALT|CTRL|SHIFT',
+    action = wezterm.action.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = 'Enter new name for this workspace' },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          wezterm.mux.rename_workspace(
+            wezterm.mux.get_active_workspace(),
+            line
+          )
+        end
+      end),
+    },
+  },
+  {
     key = 'N',
     mods = 'ALT|CTRL|SHIFT',
     action = wezterm.action.PromptInputLine {
