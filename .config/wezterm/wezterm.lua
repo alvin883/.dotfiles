@@ -5,6 +5,8 @@ local mux = wezterm.mux
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+local balance = require 'balance'
+
 -- Overriding color theme -----------------------------------------------------
 -- This will get the existing theme for Catppuccin Mocha and we override some
 -- of its tab color on the next line
@@ -120,9 +122,15 @@ config.keys = {
   {
     key = 'Enter',
     mods = 'SHIFT|CTRL',
-    action = wezterm.action.SplitPane {
-      direction = 'Right',
+    action = wezterm.action.Multiple {
+      wezterm.action.SplitPane { direction = 'Right' },
+      wezterm.action_callback(balance.balance_panes("x")),
     },
+  },
+  {
+    key = 'B',
+    mods = 'SHIFT|CTRL|ALT',
+    action = wezterm.action_callback(balance.balance_panes("x")),
   },
   {
     key = 'W',
