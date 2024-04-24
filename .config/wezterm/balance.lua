@@ -1,4 +1,8 @@
 -- balance.lua
+-- references:
+-- - https://github.com/wez/wezterm/issues/2972#issuecomment-1650627875
+-- - https://gist.github.com/fcpg/eb3c05be5b480f4cad767199dac5cecd
+
 
 local wezterm = require 'wezterm'
 local module = {}
