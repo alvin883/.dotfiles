@@ -39,6 +39,7 @@ character = "┊"
 [keys.normal]
 esc = ['collapse_selection', 'keep_primary_selection']
 C-f = ':format'
+C-y = ':yank-diagnostic'
 # C-s = ':write'
 "C-A-s" = 'save_selection'
 "ret" = 'open_below'
@@ -65,7 +66,6 @@ o = "file_picker_in_current_buffer_directory"
 i = ":toggle lsp.display-inlay-hints"
 t = ':toggle soft-wrap.enable'
 T = ':set soft-wrap.wrap-at-text-width true'
-c = ":buffer-close"
 
 # [editor.whitespace.render]
 # space = "all"
