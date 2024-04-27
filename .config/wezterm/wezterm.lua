@@ -5,7 +5,7 @@ local mux = wezterm.mux
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
-local balance = require 'balance'
+-- local balance = require 'balance'
 
 -- Overriding color theme -----------------------------------------------------
 -- This will get the existing theme for Catppuccin Mocha and we override some
@@ -27,7 +27,9 @@ config.inactive_pane_hsb = {
 }
 -------------------------------------------------------------------------------
 -- Sizing & Position ----------------------------------------------------------
-config.font = wezterm.font_with_fallback({ { family = "Fira Code" } })
+config.font = wezterm.font_with_fallback({ "Liga SFMono Nerd Font", "JetBrains Mono" })
+-- reference: https://github.com/wez/wezterm/issues/4874#issuecomment-1913328676
+-- config.freetype_load_flags = 'NO_HINTING'
 config.window_decorations = 'RESIZE'
 config.use_fancy_tab_bar = false
 config.window_padding = {
@@ -40,8 +42,8 @@ config.window_padding = {
 config.tab_bar_at_bottom = true
 config.show_new_tab_button_in_tab_bar = false
 config.window_background_opacity = 0.97
-config.font_size = 11.8
-config.line_height = 1.34
+config.font_size = 12.4
+config.line_height = 1.2
 -------------------------------------------------------------------------------
 -- Events ---------------------------------------------------------------------
 wezterm.on('trigger-open-scrollback-into-editor', function(window, pane)
@@ -124,14 +126,14 @@ config.keys = {
     mods = 'SHIFT|CTRL',
     action = wezterm.action.Multiple {
       wezterm.action.SplitPane { direction = 'Right' },
-      wezterm.action_callback(balance.balance_panes("x")),
+      -- wezterm.action_callback(balance.balance_panes("x")),
     },
   },
-  {
-    key = 'B',
-    mods = 'SHIFT|CTRL|ALT',
-    action = wezterm.action_callback(balance.balance_panes("x")),
-  },
+  -- {
+  --   key = 'B',
+  --   mods = 'SHIFT|CTRL|ALT',
+  --   action = wezterm.action_callback(balance.balance_panes("x")),
+  -- },
   {
     key = 'W',
     mods = 'SHIFT|CTRL',
@@ -270,10 +272,25 @@ config.keys = {
     key = 'H',
     mods = 'ALT|CTRL|SHIFT',
     action = wezterm.action.EmitEvent 'trigger-open-scrollback-into-editor',
-  }
+  },
+  {
+    key = 'L',
+    mods = 'ALT|CTRL|SHIFT',
+    action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' }
+  },
+  {
+    key = 'Q',
+    mods = 'ALT|CTRL|SHIFT',
+    action = wezterm.action.QuitApplication,
+  },
 }
 -------------------------------------------------------------------------------
 -- Multiplexing ---------------------------------------------------------------
+config.unix_domains = {
+  {
+    name = 'self',
+  }
+}
 config.ssh_domains = {
   {
     name = 'mac',
@@ -287,15 +304,15 @@ wezterm.on("gui-startup", function()
   window:gui_window():maximize()
 end)
 
-wezterm.on('gui-attached', function(domain)
-  -- maximize all displayed windows on startup
-  local workspace = mux.get_active_workspace()
-  for _, window in ipairs(mux.all_windows()) do
-    if window:get_workspace() == workspace then
-      window:gui_window():maximize()
-    end
-  end
-end)
+-- wezterm.on('gui-attached', function(domain)
+--   -- maximize all displayed windows on startup
+--   local workspace = mux.get_active_workspace()
+--   for _, window in ipairs(mux.all_windows()) do
+--     if window:get_workspace() == workspace then
+--       window:gui_window():maximize()
+--     end
+--   end
+-- end)
 
 wezterm.on('update-right-status', function(window, pane)
   window:set_right_status(window:active_workspace())
