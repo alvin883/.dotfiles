@@ -50,14 +50,14 @@ wezterm.on('trigger-open-scrollback-into-editor', function(window, pane)
   -- Retrieve the text from the pane
   local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
 
-  -- Create a temporary file to pass to vim
+  -- Create a temporary file to pass to helix
   local name = os.tmpname()
   local f = io.open(name, 'w+')
   f:write(text)
   f:flush()
   f:close()
 
-  -- Open a new window running vim and tell it to open the file
+  -- Open a new window running helix and tell it to open the file
   window:perform_action(
     wezterm.action.SpawnCommandInNewWindow {
       args = { 'hx', name },
@@ -69,7 +69,7 @@ wezterm.on('trigger-open-scrollback-into-editor', function(window, pane)
     pane
   )
 
-  -- Wait "enough" time for vim to read the file before we remove it.
+  -- Wait "enough" time for helix to read the file before we remove it.
   -- The window creation and process spawn are asynchronous wrt. running
   -- this script and are not awaitable, so we just pick a number.
   --
@@ -170,6 +170,65 @@ config.keys = {
     key = 'Backspace',
     mods = 'SHIFT|CTRL',
     action = wezterm.action.ResetFontSize,
+  },
+  {
+    key = 'O',
+    mods = 'SHIFT|CTRL',
+    action = wezterm.action.QuickSelectArgs {
+      label = 'open file in existing hx session (if exist)',
+      patterns = {
+        -- I copied the default path pattern from wezterm, here:
+        -- https://github.com/wez/wezterm/blob/b8f94c474ce48ac195b51c1aeacf41ae049b774e/wezterm-gui/src/overlay/quickselect.rs#L38
+        --
+        -- and then add the optional row & col number match (ex. `:100:200`) so
+        -- I can open the file & jump to that particular row & col
+        -- regex portion that I added:
+        -- :?[0-9]*:?[0-9]*
+        --
+        -- explanation:
+        -- :?       match : optionally
+        -- [0-9]*   match number optionally & continuously
+        -- reference: https://docs.rs/regex/latest/regex/#repetitions
+        "(?:[.\\w\\-@~]+)?(?:/[.\\w\\-@]+)+:?[0-9]*:?[0-9]*",
+      },
+      action = wezterm.action_callback(function(window, pane)
+        local file_path = window:get_selection_text_for_pane(pane)
+        local workspace_name = wezterm.mux.get_active_workspace()
+        local tabs = window:mux_window():tabs()
+        local helix_pane
+
+        for _, t in ipairs(tabs) do
+          local panes = t:panes()
+          for _, p in ipairs(panes) do
+            local title = p:get_title()
+            if title == workspace_name .. ": hx ." then
+              helix_pane = p
+              break
+            end
+          end
+          if helix_pane then
+            break
+          end
+        end
+
+        if helix_pane then
+          helix_pane:send_text(":open " .. file_path)
+          helix_pane:activate()
+        else
+          -- Open a new tab running helix and tell it to open the file
+          window:perform_action(
+            wezterm.action.SpawnCommandInNewTab {
+              args = { 'hx', file_path },
+              set_environment_variables = {
+                PATH = wezterm.home_dir .. '/.cargo/bin:' .. os.getenv('PATH'),
+                HELIX_RUNTIME = wezterm.home_dir .. '/Documents/helix/runtime'
+              }
+            },
+            pane
+          )
+        end
+      end),
+    },
   },
   -- Quick select http pattern & open it on select
   -- reference: https://wezfurlong.org/wezterm/config/lua/keyassignment/QuickSelectArgs.html
