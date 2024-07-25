@@ -41,7 +41,7 @@ config.window_padding = {
 -- config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 config.show_new_tab_button_in_tab_bar = false
-config.window_background_opacity = 0.97
+config.window_background_opacity = 0.92
 config.font_size = 12.4
 config.line_height = 1.2
 -------------------------------------------------------------------------------
@@ -342,6 +342,26 @@ config.keys = {
     mods = 'ALT|CTRL|SHIFT',
     action = wezterm.action.QuitApplication,
   },
+  {
+    key = 'LeftArrow',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.AdjustPaneSize { 'Left', 5 },
+  },
+  {
+    key = 'RightArrow',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.AdjustPaneSize { 'Right', 5 },
+  },
+  {
+    key = 'UpArrow',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.AdjustPaneSize { 'Up', 5 },
+  },
+  {
+    key = 'DownArrow',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.AdjustPaneSize { 'Down', 5 },
+  }
 }
 -------------------------------------------------------------------------------
 -- Multiplexing ---------------------------------------------------------------
