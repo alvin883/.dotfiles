@@ -309,3 +309,14 @@ if [[ $MY_SESSION_TYPE = 'definitelyssh' ]]; then
   # Auto-kill ssh-agent on logout or exit
   trap 'test -n "$SSH_AGENT_PID" && eval `/usr/bin/ssh-agent -k`' 0
 fi
+
+# Resize video to 1280x720 with ffmpeg
+# usage example: resizeVideoTo720p input.mkv output_720.mp4
+resizeVideoTo720p() {
+  if [ ! "$#" -gt 1 ]; then
+    echo "Need two args, video name to be resized & it's output video name!";
+    return 1;
+  fi
+
+  ffmpeg -i "$1" -filter:v scale=1280:-1 -c:a copy "$2"
+}
