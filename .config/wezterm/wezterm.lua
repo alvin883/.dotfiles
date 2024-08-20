@@ -122,6 +122,16 @@ config.keys = {
     action = wezterm.action.ActivatePaneDirection 'Right',
   },
   {
+    key = '+',
+    mods = 'SHIFT|CTRL',
+    action = wezterm.action.ActivatePaneDirection 'Up',
+  },
+  {
+    key = '_',
+    mods = 'SHIFT|CTRL',
+    action = wezterm.action.ActivatePaneDirection 'Down',
+  },
+  {
     key = 'Enter',
     mods = 'SHIFT|CTRL',
     action = wezterm.action.Multiple {
