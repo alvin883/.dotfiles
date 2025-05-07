@@ -1,2 +1,7 @@
 inherits = 'catppuccin_mocha'
-"ui.background" = { fg = "text", bg = "transparent" }
+"ui.background" = { fg = "text" }
+"ui.cursorline.primary" = { }
+
+"ui.bufferline" = { fg = "#56586a" }
+"ui.bufferline.active" = { fg = "mauve", bg = "base", underline = { color = "mauve", style = "line" } }
+"ui.bufferline.background" = { }
