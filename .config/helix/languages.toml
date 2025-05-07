@@ -6,7 +6,8 @@ auto-format = true
 [[language]]
 name = "typescript"
 auto-format = true
-formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "typescript"] }
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+# formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "typescript"] }
 
 [[language]]
 name = "javascript"
@@ -16,7 +17,8 @@ formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.conf
 [[language]]
 name = "tsx"
 auto-format = true
-formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "typescript"] }
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+# formatter = { command = "prettier", args = ["--config", "/home/alvinnovian/.config/helix/.prettierrc", "--parser", "typescript"] }
 
 [[language]]
 name = "jsx"

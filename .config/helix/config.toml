@@ -13,6 +13,7 @@ bufferline = 'always'
 color-modes = true
 shell = ["zsh", "-c"]
 auto-info = false
+end-of-line-diagnostics = 'hint'
 
 # [editor.cursor-shape]
 # insert = "bar"
@@ -27,10 +28,13 @@ hidden = false
 # related: https://github.com/helix-editor/helix/discussions/5830
 # soft-wrap.enable = true
 
-[editor.lsp]
+# [editor.lsp]
 # display-messages = false
 # inline-diagnostics.cursor-line = []
 # inline-diagnostics.other-lines = []
+
+[editor.inline-diagnostics]
+cursor-line = 'warning'
 
 [editor.indent-guides]
 render = true
@@ -48,6 +52,9 @@ C-y = ':yank-diagnostic'
 "C-S-ret" = ['open_above', 'normal_mode']
 "C-left" = 'move_prev_word_start'
 "C-right" = 'move_next_word_start'
+# C-b = ":echo %sh{git show --no-patch --format='%%h (%%an: %%ar): %%s' $(git blame -p %{buffer_name} -L%{cursor_line},+1 | head -1 | cut -d' ' -f1)}"
+C-b = ":echo %sh{git blame --date=iso -L %{cursor_line},+1 %{buffer_name} | cut -d' ' -f1-4 | sed 's/$/)/g'}"
+
 
 [keys.insert]
 C-f = [':format', 'normal_mode']
